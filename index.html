@@ -1,66 +1,1076 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Nhận định, phân tích chiến thuật, đội hình dự kiến và dự đoán tỷ số trận đấu bóng đá.">
+  <title>Nhận định [Đội A] vs [Đội B] | Chuyện Sân Cỏ</title>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Monetag đặt ở đây -->
+  <script>
+    CODE_MONETAG_CUA_BAN
+  </script>
 
-<title>Chuyện Sân Cỏ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<!-- Monetag đặt ở đây -->
-<script>
-CODE_MONETAG_CUA_BAN
-</script>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --surface: #111827;
+      --surface-2: #1f2937;
+      --border: #374151;
+      --text: #f9fafb;
+      --muted: #9ca3af;
+      --accent: #22c55e;
+      --accent-dark: #15803d;
+      --gold: #fbbf24;
+      --danger: #ef4444;
+      --info: #3b82f6;
+      --radius: 14px;
+      --shadow: 0 10px 40px rgba(0, 0, 0, 0.35);
+      --max: 1100px;
+    }
 
-<style>
-body{
-    font-family: Arial;
-    margin:0;
-    background:#f5f5f5;
-}
+    *, *::before, *::after { box-sizing: border-box; }
 
-header{
-    background:#111;
-    color:white;
-    padding:20px;
-    text-align:center;
-}
+    body {
+      margin: 0;
+      font-family: "Be Vietnam Pro", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
 
-.article{
-    background:white;
-    margin:20px;
-    padding:20px;
-    border-radius:10px;
-}
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
 
-img{
-    width:100%;
-}
-</style>
+    img { max-width: 100%; display: block; }
 
+    .container {
+      width: min(100% - 2rem, var(--max));
+      margin-inline: auto;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      border-bottom: 1px solid var(--border);
+      background: rgba(11, 18, 32, 0.92);
+      backdrop-filter: blur(12px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .site-header .inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 0;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      display: grid;
+      place-items: center;
+      font-size: 1.1rem;
+    }
+
+    .nav-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.3rem 0.65rem;
+      border-radius: 999px;
+      background: var(--surface-2);
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .tag.live {
+      background: rgba(239, 68, 68, 0.15);
+      color: #fca5a5;
+      border-color: rgba(239, 68, 68, 0.4);
+    }
+
+    /* ── Match Hero ── */
+    .match-hero {
+      padding: 2.5rem 0 2rem;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% -10%, rgba(34, 197, 94, 0.18), transparent),
+        var(--bg);
+    }
+
+    .competition {
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+
+    .matchup {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      gap: 1rem;
+      max-width: 720px;
+      margin: 0 auto 1.5rem;
+    }
+
+    .team-block {
+      text-align: center;
+    }
+
+    .team-block.home { text-align: right; }
+    .team-block.away { text-align: left; }
+
+    .team-logo {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 0.75rem;
+      border-radius: 50%;
+      background: var(--surface-2);
+      border: 2px solid var(--border);
+      display: grid;
+      place-items: center;
+      font-size: 2rem;
+      overflow: hidden;
+    }
+
+    .team-block.home .team-logo { margin-left: auto; margin-right: 0; }
+    .team-block.away .team-logo { margin-right: auto; margin-left: 0; }
+
+    .team-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 10px;
+    }
+
+    .team-name {
+      font-size: 1.35rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .team-meta {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.25rem;
+    }
+
+    .vs-center {
+      text-align: center;
+    }
+
+    .vs-badge {
+      display: inline-grid;
+      place-items: center;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .match-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem 1.25rem;
+      font-size: 0.875rem;
+      color: var(--muted);
+    }
+
+    .match-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    /* ── Article layout ── */
+    .article-wrap {
+      padding: 2rem 0 4rem;
+    }
+
+    .article-grid {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .article-main > * + * { margin-top: 2rem; }
+
+    .article-title {
+      font-size: clamp(1.5rem, 4vw, 2rem);
+      font-weight: 800;
+      line-height: 1.25;
+      margin: 0 0 1rem;
+    }
+
+    .byline {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1.5rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .byline strong { color: var(--text); }
+
+    .hero-image {
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      aspect-ratio: 16 / 9;
+      background: var(--surface);
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-caption {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
+      font-style: italic;
+    }
+
+    /* ── Cards & sections ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin: 0 0 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .section-title::before {
+      content: "";
+      width: 4px;
+      height: 1.1rem;
+      border-radius: 2px;
+      background: var(--accent);
+    }
+
+    .lead {
+      font-size: 1.05rem;
+      color: #d1d5db;
+      margin: 0;
+    }
+
+    .prose p { margin: 0 0 1rem; }
+    .prose p:last-child { margin-bottom: 0; }
+
+    /* ── Form badges ── */
+    .form-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .form-row:last-child { border-bottom: none; }
+
+    .form-team {
+      font-weight: 600;
+      font-size: 0.9rem;
+      min-width: 100px;
+    }
+
+    .form-badges {
+      display: flex;
+      gap: 0.35rem;
+    }
+
+    .form-badge {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      display: grid;
+      place-items: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
+    .form-badge.W { background: rgba(34, 197, 94, 0.2); color: #86efac; }
+    .form-badge.D { background: rgba(251, 191, 36, 0.2); color: #fde68a; }
+    .form-badge.L { background: rgba(239, 68, 68, 0.2); color: #fca5a5; }
+
+    /* ── H2H stats ── */
+    .h2h-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      text-align: center;
+    }
+
+    .h2h-stat .value {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .h2h-stat .label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+    }
+
+    /* ── Lineups ── */
+    .lineups-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+
+    .lineup-card {
+      background: var(--surface-2);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .lineup-header {
+      padding: 0.85rem 1rem;
+      background: rgba(0, 0, 0, 0.25);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    .formation-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--accent);
+    }
+
+    .pitch {
+      position: relative;
+      aspect-ratio: 3 / 4;
+      background: linear-gradient(180deg, #166534 0%, #15803d 50%, #166534 100%);
+      margin: 0.75rem;
+      border-radius: 8px;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+      overflow: hidden;
+    }
+
+    .pitch::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, transparent 49.5%, rgba(255,255,255,0.3) 49.5%, rgba(255,255,255,0.3) 50.5%, transparent 50.5%),
+        radial-gradient(circle at 50% 50%, transparent 18%, rgba(255,255,255,0.25) 18%, rgba(255,255,255,0.25) 19%, transparent 19%);
+    }
+
+    .player-dot {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      width: 56px;
+    }
+
+    .player-dot .num {
+      width: 30px;
+      height: 30px;
+      margin: 0 auto;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 2px solid var(--accent);
+      display: grid;
+      place-items: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
+    .player-dot .name {
+      font-size: 0.6rem;
+      font-weight: 600;
+      margin-top: 2px;
+      color: #fff;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .bench-list {
+      padding: 0.75rem 1rem 1rem;
+      font-size: 0.8rem;
+    }
+
+    .bench-list h4 {
+      margin: 0 0 0.5rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .bench-list ul {
+      margin: 0;
+      padding-left: 1.1rem;
+      color: #d1d5db;
+    }
+
+    .bench-list li { margin-bottom: 0.2rem; }
+
+    /* ── Key players ── */
+    .players-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    .player-card {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem;
+    }
+
+    .player-card .role {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .player-card .pname {
+      font-weight: 700;
+      font-size: 1rem;
+      margin: 0.25rem 0;
+    }
+
+    .player-card .pdesc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    /* ── Prediction ── */
+    .prediction-box {
+      background: linear-gradient(135deg, rgba(34,197,94,0.12), rgba(251,191,36,0.08));
+      border: 1px solid rgba(34, 197, 94, 0.35);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      text-align: center;
+    }
+
+    .prediction-score {
+      font-size: 3rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      line-height: 1;
+      margin: 0.5rem 0;
+    }
+
+    .prediction-score .sep { color: var(--muted); margin: 0 0.25rem; }
+
+    .confidence {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.85rem;
+      color: var(--gold);
+      font-weight: 600;
+      margin-top: 0.5rem;
+    }
+
+    .confidence-bar {
+      width: 120px;
+      height: 6px;
+      background: var(--surface-2);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .confidence-fill {
+      height: 100%;
+      background: var(--gold);
+      border-radius: 999px;
+    }
+
+    .prediction-note {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 1rem;
+      max-width: 520px;
+      margin-inline: auto;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar > * + * { margin-top: 1.25rem; }
+
+    .sidebar-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+    }
+
+    .sidebar-card h3 {
+      margin: 0 0 1rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+
+    .info-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .info-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding: 0.55rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.85rem;
+    }
+
+    .info-list li:last-child { border-bottom: none; }
+    .info-list .key { color: var(--muted); }
+    .info-list .val { font-weight: 600; text-align: right; }
+
+    .odds-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      text-align: center;
+    }
+
+    .odd-item {
+      background: var(--surface-2);
+      border-radius: 10px;
+      padding: 0.75rem 0.5rem;
+      border: 1px solid var(--border);
+    }
+
+    .odd-item .label { font-size: 0.7rem; color: var(--muted); }
+    .odd-item .value { font-size: 1.1rem; font-weight: 700; margin-top: 0.15rem; }
+
+    .verdict {
+      border-left: 3px solid var(--accent);
+      padding-left: 1rem;
+      font-style: italic;
+      color: #d1d5db;
+    }
+
+    .disclaimer {
+      font-size: 0.75rem;
+      color: var(--muted);
+      padding: 1rem;
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      margin-top: 2rem;
+    }
+
+    /* ── Footer ── */
+    .site-footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 0;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 900px) {
+      .article-grid { grid-template-columns: 1fr; }
+      .sidebar { order: -1; }
+      .lineups-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .matchup {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .team-block.home,
+      .team-block.away { text-align: center; }
+      .team-block.home .team-logo,
+      .team-block.away .team-logo { margin-inline: auto; }
+      .vs-center { order: -1; }
+      .team-name { font-size: 1.15rem; }
+    }
+  </style>
 </head>
-
 
 <body>
 
-<header>
-<h1>⚽ Chuyện Sân Cỏ</h1>
-<p>Tin bóng đá mới nhất</p>
-</header>
+  <!-- ════════════════════════════════════════════
+       HEADER — Cập nhật tên site nếu cần
+       ════════════════════════════════════════════ -->
+  <header class="site-header">
+    <div class="container inner">
+      <a href="/" class="brand">
+        <span class="brand-icon">⚽</span>
+        Chuyện Sân Cỏ
+      </a>
+      <div class="nav-tags">
+        <span class="tag">Nhận định</span>
+        <span class="tag">Đội hình</span>
+        <span class="tag">Dự đoán</span>
+      </div>
+    </div>
+  </header>
 
 
-<div class="article">
+  <!-- ════════════════════════════════════════════
+       MATCH HERO — Thông tin trận đấu chính
+       ════════════════════════════════════════════ -->
+  <section class="match-hero">
+    <div class="container">
 
-<h2>Nhận định trận chung kết World Cup</h2>
+      <p class="competition">[TÊN GIẢI ĐẤU] · [VÒNG ĐẤU / GIAI ĐOẠN]</p>
 
-<img src="https://picsum.photos/800/400">
+      <div class="matchup">
+        <div class="team-block home">
+          <div class="team-logo">
+            <!-- Thay src bằng logo đội nhà -->
+            <img src="https://via.placeholder.com/80?text=🏠" alt="Logo [Đội nhà]">
+          </div>
+          <div class="team-name">[Đội nhà]</div>
+          <div class="team-meta">Sân nhà</div>
+        </div>
 
-<p>
-Cập nhật thông tin, đội hình, dự đoán tỷ số.
-</p>
+        <div class="vs-center">
+          <div class="vs-badge">VS</div>
+        </div>
 
-</div>
+        <div class="team-block away">
+          <div class="team-logo">
+            <!-- Thay src bằng logo đội khách -->
+            <img src="https://via.placeholder.com/80?text=✈️" alt="Logo [Đội khách]">
+          </div>
+          <div class="team-name">[Đội khách]</div>
+          <div class="team-meta">Sân khách</div>
+        </div>
+      </div>
 
+      <div class="match-meta">
+        <span>📅 [Ngày/tháng/năm] · [Giờ thi đấu]</span>
+        <span>🏟️ [Tên sân vận động]</span>
+        <span>📍 [Thành phố, quốc gia]</span>
+        <span>👨‍⚖️ [Tên trọng tài]</span>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════
+       NỘI DUNG BÀI VIẾT
+       ════════════════════════════════════════════ -->
+  <main class="article-wrap">
+    <div class="container article-grid">
+
+      <!-- ── Cột chính ── -->
+      <article class="article-main">
+
+        <header>
+          <h1 class="article-title">
+            Nhận định [Đội nhà] vs [Đội khách]: [Tiêu đề phụ hấp dẫn — ví dụ: Cuộc đối đầu quyết định top 4]
+          </h1>
+          <div class="byline">
+            <span>Tác giả: <strong>[Tên tác giả]</strong></span>
+            <span>Cập nhật: <strong>[Ngày giờ cập nhật]</strong></span>
+            <span>⏱ ~[X] phút đọc</span>
+          </div>
+        </header>
+
+        <figure class="hero-image">
+          <!-- Thay ảnh bìa bài viết -->
+          <img src="https://picsum.photos/1200/675" alt="[Mô tả ảnh bìa trận đấu]">
+        </figure>
+        <p class="hero-caption">[Chú thích ảnh — nguồn ảnh nếu có]</p>
+
+
+        <!-- TÓM TẮT NHANH -->
+        <section class="card">
+          <h2 class="section-title">Tóm tắt nhanh</h2>
+          <p class="lead">
+            [Viết 2–3 câu tóm tắt toàn bộ nhận định: bối cảnh trận, ai được đánh giá cao hơn, dự đoán tỷ số nhanh.]
+          </p>
+        </section>
+
+
+        <!-- BỐI CẢNH TRẬN ĐẤU -->
+        <section class="card prose">
+          <h2 class="section-title">Bối cảnh trận đấu</h2>
+          <p>
+            [Mô tả vị trí hai đội trên bảng xếp hạng, mục tiêu mùa giải, áp lực từ ban lãnh đạo, chấn thương/treo giò quan trọng, v.v.]
+          </p>
+          <p>
+            [Thêm đoạn phân tích tại sao trận này quan trọng — ảnh hưởng đến cuộc đua vô địch, trụ hạng, vé C1...]
+          </p>
+        </section>
+
+
+        <!-- PHONG ĐỘ GẦN ĐÂY -->
+        <section class="card">
+          <h2 class="section-title">Phong độ 5 trận gần nhất</h2>
+
+          <div class="form-row">
+            <span class="form-team">[Đội nhà]</span>
+            <div class="form-badges">
+              <!-- W = Thắng, D = Hòa, L = Thua — sắp xếp từ cũ → mới -->
+              <span class="form-badge W" title="Thắng">W</span>
+              <span class="form-badge W" title="Thắng">W</span>
+              <span class="form-badge D" title="Hòa">D</span>
+              <span class="form-badge L" title="Thua">L</span>
+              <span class="form-badge W" title="Thắng">W</span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <span class="form-team">[Đội khách]</span>
+            <div class="form-badges">
+              <span class="form-badge L" title="Thua">L</span>
+              <span class="form-badge W" title="Thắng">W</span>
+              <span class="form-badge W" title="Thắng">W</span>
+              <span class="form-badge D" title="Hòa">D</span>
+              <span class="form-badge W" title="Thắng">W</span>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- LỊCH SỬ ĐỐI ĐẦU -->
+        <section class="card">
+          <h2 class="section-title">Lịch sử đối đầu (H2H)</h2>
+          <div class="h2h-grid">
+            <div class="h2h-stat">
+              <div class="value">[X]</div>
+              <div class="label">Thắng [Đội nhà]</div>
+            </div>
+            <div class="h2h-stat">
+              <div class="value">[X]</div>
+              <div class="label">Hòa</div>
+            </div>
+            <div class="h2h-stat">
+              <div class="value">[X]</div>
+              <div class="label">Thắng [Đội khách]</div>
+            </div>
+          </div>
+          <p class="prose" style="margin-top:1rem; font-size:0.9rem; color:var(--muted);">
+            [Ghi chú H2H: 5 trận gần nhất, tỷ số, xu hướng sân nhà/sân khách...]
+          </p>
+        </section>
+
+
+        <!-- ĐỘI HÌNH DỰ KIẾN -->
+        <section class="card">
+          <h2 class="section-title">Đội hình dự kiến</h2>
+          <p style="font-size:0.85rem; color:var(--muted); margin: -0.5rem 0 1.25rem;">
+            * Đội hình dự đoán dựa trên thông tin chấn thương và press conference. Cập nhật trước giờ bóng lăn.
+          </p>
+
+          <div class="lineups-grid">
+
+            <!-- Đội nhà -->
+            <div class="lineup-card">
+              <div class="lineup-header">
+                <span>[Đội nhà]</span>
+                <span class="formation-badge">[4-3-3]</span>
+              </div>
+              <div class="pitch" aria-label="Sơ đồ [Đội nhà]">
+                <!--
+                  Vị trí player-dot: top/left theo % trên sân.
+                  Ví dụ 4-3-3 — chỉnh lại theo đội hình thực tế.
+                -->
+                <div class="player-dot" style="top:88%; left:50%;">
+                  <div class="num">1</div><div class="name">[Thủ môn]</div>
+                </div>
+                <div class="player-dot" style="top:72%; left:18%;">
+                  <div class="num">2</div><div class="name">[Hậu vệ]</div>
+                </div>
+                <div class="player-dot" style="top:72%; left:40%;">
+                  <div class="num">4</div><div class="name">[Trung vệ]</div>
+                </div>
+                <div class="player-dot" style="top:72%; left:60%;">
+                  <div class="num">5</div><div class="name">[Trung vệ]</div>
+                </div>
+                <div class="player-dot" style="top:72%; left:82%;">
+                  <div class="num">3</div><div class="name">[Hậu vệ]</div>
+                </div>
+                <div class="player-dot" style="top:52%; left:25%;">
+                  <div class="num">8</div><div class="name">[Tiền vệ]</div>
+                </div>
+                <div class="player-dot" style="top:52%; left:50%;">
+                  <div class="num">6</div><div class="name">[Tiền vệ]</div>
+                </div>
+                <div class="player-dot" style="top:52%; left:75%;">
+                  <div class="num">10</div><div class="name">[Tiền vệ]</div>
+                </div>
+                <div class="player-dot" style="top:28%; left:22%;">
+                  <div class="num">11</div><div class="name">[Tiền đạo]</div>
+                </div>
+                <div class="player-dot" style="top:22%; left:50%;">
+                  <div class="num">9</div><div class="name">[Tiền đạo]</div>
+                </div>
+                <div class="player-dot" style="top:28%; left:78%;">
+                  <div class="num">7</div><div class="name">[Tiền đạo]</div>
+                </div>
+              </div>
+              <div class="bench-list">
+                <h4>Dự bị &amp; vắng mặt</h4>
+                <ul>
+                  <li><strong>Dự bị:</strong> [Cầu thủ 1], [Cầu thủ 2], [Cầu thủ 3]...</li>
+                  <li><strong>Chấn thương:</strong> [Tên — loại chấn thương]</li>
+                  <li><strong>Treo giò:</strong> [Tên — số trận]</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Đội khách -->
+            <div class="lineup-card">
+              <div class="lineup-header">
+                <span>[Đội khách]</span>
+                <span class="formation-badge">[4-2-3-1]</span>
+              </div>
+              <div class="pitch" aria-label="Sơ đồ [Đội khách]">
+                <div class="player-dot" style="top:88%; left:50%;">
+                  <div class="num">1</div><div class="name">[Thủ môn]</div>
+                </div>
+                <div class="player-dot" style="top:72%; left:18%;">
+                  <div class="num">2</div><div class="name">[Hậu vệ]</div>
+                </div>
+                <div class="player-dot" style="top:72%; left:40%;">
+                  <div class="num">4</div><div class="name">[Trung vệ]</div>
+                </div>
+                <div class="player-dot" style="top:72%; left:60%;">
+                  <div class="num">5</div><div class="name">[Trung vệ]</div>
+                </div>
+                <div class="player-dot" style="top:72%; left:82%;">
+                  <div class="num">3</div><div class="name">[Hậu vệ]</div>
+                </div>
+                <div class="player-dot" style="top:58%; left:35%;">
+                  <div class="num">6</div><div class="name">[Tiền vệ]</div>
+                </div>
+                <div class="player-dot" style="top:58%; left:65%;">
+                  <div class="num">8</div><div class="name">[Tiền vệ]</div>
+                </div>
+                <div class="player-dot" style="top:42%; left:20%;">
+                  <div class="num">11</div><div class="name">[Cánh trái]</div>
+                </div>
+                <div class="player-dot" style="top:42%; left:50%;">
+                  <div class="num">10</div><div class="name">[Hộ công]</div>
+                </div>
+                <div class="player-dot" style="top:42%; left:80%;">
+                  <div class="num">7</div><div class="name">[Cánh phải]</div>
+                </div>
+                <div class="player-dot" style="top:22%; left:50%;">
+                  <div class="num">9</div><div class="name">[Tiền đạo]</div>
+                </div>
+              </div>
+              <div class="bench-list">
+                <h4>Dự bị &amp; vắng mặt</h4>
+                <ul>
+                  <li><strong>Dự bị:</strong> [Cầu thủ 1], [Cầu thủ 2], [Cầu thủ 3]...</li>
+                  <li><strong>Chấn thương:</strong> [Tên — loại chấn thương]</li>
+                  <li><strong>Treo giò:</strong> [Không / Tên cầu thủ]</li>
+                </ul>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+
+        <!-- CẦU THỦ TRỌNG TÂM -->
+        <section class="card">
+          <h2 class="section-title">Cầu thủ cần theo dõi</h2>
+          <div class="players-grid">
+            <div class="player-card">
+              <div class="role">[Đội nhà]</div>
+              <div class="pname">[Tên cầu thủ]</div>
+              <p class="pdesc">[Lý do quan trọng — phong độ, vai trò chiến thuật, kỷ lục đối đầu...]</p>
+            </div>
+            <div class="player-card">
+              <div class="role">[Đội khách]</div>
+              <div class="pname">[Tên cầu thủ]</div>
+              <p class="pdesc">[Lý do quan trọng]</p>
+            </div>
+            <div class="player-card">
+              <div class="role">Mối đối đầu</div>
+              <div class="pname">[Cầu thủ A] vs [Cầu thủ B]</div>
+              <p class="pdesc">[Phân tích matchup cá nhân — ví dụ tiền đạo vs trung vệ]</p>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- PHÂN TÍCH CHIẾN THUẬT -->
+        <section class="card prose">
+          <h2 class="section-title">Phân tích chiến thuật</h2>
+          <p>
+            <strong>[Đội nhà]:</strong> [Cách chơi, điểm mạnh/yếu, pressing, kiểm soát bóng, set-piece...]
+          </p>
+          <p>
+            <strong>[Đội khách]:</strong> [Phong cách, phản công, khả năng giữ bóng, khoảng trống có thể khai thác...]
+          </p>
+          <p>
+            <strong>Kịch bản trận đấu:</strong> [Dự đoán diễn biến — ai chủ động, thời điểm then chốt, yếu tố thời tiết/sân bãi nếu có]
+          </p>
+        </section>
+
+
+        <!-- DỰ ĐOÁN TỶ SỐ -->
+        <section class="prediction-box">
+          <h2 class="section-title" style="justify-content:center;">Dự đoán tỷ số</h2>
+          <div class="prediction-score">
+            [Tỷ số H]<span class="sep">–</span>[Tỷ số A]
+          </div>
+          <div class="confidence">
+            Độ tin cậy
+            <div class="confidence-bar">
+              <!-- width: 50% = trung bình, 70% = cao, 85%+ = rất cao -->
+              <div class="confidence-fill" style="width: 65%;"></div>
+            </div>
+            [65]%
+          </div>
+          <p class="prediction-note">
+            [Giải thích ngắn gọn lý do chọn tỷ số — phong độ, H2H, lợi thế sân nhà, lực lượng...]
+          </p>
+        </section>
+
+
+        <!-- KẾT LUẬN -->
+        <section class="card">
+          <h2 class="section-title">Kết luận</h2>
+          <p class="verdict">
+            "[Câu kết luận mạnh, súc tích — ai nắm thế trận, khả năng cao xảy ra gì, lời khuyên cho người theo dõi trận.]"
+          </p>
+        </section>
+
+        <p class="disclaimer">
+          ⚠️ Bài viết mang tính nhận định và phân tích, không phải lời khuyên cá cược. Thông tin đội hình có thể thay đổi trước giờ bóng lăn. Vui lòng cập nhật từ nguồn chính thức.
+        </p>
+
+      </article>
+
+
+      <!-- ── Sidebar ── -->
+      <aside class="sidebar">
+
+        <div class="sidebar-card">
+          <h3>Thông tin trận đấu</h3>
+          <ul class="info-list">
+            <li><span class="key">Giải đấu</span><span class="val">[Tên giải]</span></li>
+            <li><span class="key">Vòng</span><span class="val">[Vòng X]</span></li>
+            <li><span class="key">Thời gian</span><span class="val">[HH:MM]</span></li>
+            <li><span class="key">Sân</span><span class="val">[Tên sân]</span></li>
+            <li><span class="key">Trọng tài</span><span class="val">[Tên]</span></li>
+            <li><span class="key">VAR</span><span class="val">[Tên]</span></li>
+          </ul>
+        </div>
+
+        <div class="sidebar-card">
+          <h3>Thống kê mùa giải</h3>
+          <ul class="info-list">
+            <li><span class="key">[Đội nhà] — Hạng</span><span class="val">#[X]</span></li>
+            <li><span class="key">[Đội nhà] — Bàn thắng</span><span class="val">[X]</span></li>
+            <li><span class="key">[Đội khách] — Hạng</span><span class="val">#[X]</span></li>
+            <li><span class="key">[Đội khách] — Bàn thắng</span><span class="val">[X]</span></li>
+          </ul>
+        </div>
+
+        <div class="sidebar-card">
+          <h3>Tỷ lệ tham khảo</h3>
+          <div class="odds-row">
+            <div class="odd-item">
+              <div class="label">[Đội nhà]</div>
+              <div class="value">[X.XX]</div>
+            </div>
+            <div class="odd-item">
+              <div class="label">Hòa</div>
+              <div class="value">[X.XX]</div>
+            </div>
+            <div class="odd-item">
+              <div class="label">[Đội khách]</div>
+              <div class="value">[X.XX]</div>
+            </div>
+          </div>
+          <p style="font-size:0.72rem; color:var(--muted); margin:0.75rem 0 0; text-align:center;">
+            * Tỷ lệ tham khảo, cập nhật trước trận
+          </p>
+        </div>
+
+        <div class="sidebar-card">
+          <h3>Dự đoán nhanh</h3>
+          <ul class="info-list">
+            <li><span class="key">Tỷ số</span><span class="val">[X – X]</span></li>
+            <li><span class="key">Ghi bàn</span><span class="val">[Cầu thủ]</span></li>
+            <li><span class="key">Cược xiên</span><span class="val">[Over 2.5 / BTTS...]</span></li>
+            <li><span class="key">Kết quả</span><span class="val">[Thắng/Hòa/Thua]</span></li>
+          </ul>
+        </div>
+
+      </aside>
+
+    </div>
+  </main>
+
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2026 <strong>Chuyện Sân Cỏ</strong> — Tin tức &amp; nhận định bóng đá</p>
+    </div>
+  </footer>
 
 </body>
 </html>
